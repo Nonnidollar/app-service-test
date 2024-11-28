@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - nonnywebapp
+name: Build and deploy ASP.Net Core app to Azure Web App - NonnyWebApp
 
 on:
   push:
@@ -16,25 +16,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Node.js version
-        uses: actions/setup-node@v3
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
         with:
-          node-version: '20.x'
+          dotnet-version: '9.x'
 
-      - name: npm install, build, and test
-        run: |
-          npm install
-          npm run build --if-present
-          npm run test --if-present
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      - name: dotnet publish
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: node-app
-          path: release.zip
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     runs-on: ubuntu-latest
@@ -49,23 +46,20 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
+          name: .net-app
       
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_773244F451E840C2999FC4BC2EC6239D }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_90B5F40138504F87955931B67AEC812F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_05BB6A5FB9524C03A5F88113531C631C }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_76D22728F9214C7A978672B8F95E9BE8 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_08DA41D2902D4B9EBF5E79E4E5DAD094 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D09E7792CF9542F0A90C96A66D9ABCF1 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'nonnywebapp'
+          app-name: 'NonnyWebApp'
           slot-name: 'Production'
           package: .
           
