@@ -1,0 +1,7 @@
+C:\Users\nonso\Documents\app-service-test\MyWebApp\pub\MyWebApp.exe
+C:\Users\nonso\Documents\app-service-test\MyWebApp\pub\appsettings.Development.json
+C:\Users\nonso\Documents\app-service-test\MyWebApp\pub\appsettings.json
+C:\Users\nonso\Documents\app-service-test\MyWebApp\pub\MyWebApp.dll
+C:\Users\nonso\Documents\app-service-test\MyWebApp\pub\MyWebApp.deps.json
+C:\Users\nonso\Documents\app-service-test\MyWebApp\pub\MyWebApp.runtimeconfig.json
+C:\Users\nonso\Documents\app-service-test\MyWebApp\pub\MyWebApp.pdb
